@@ -8,7 +8,7 @@ server.use(express.json());
 server.use('/api/todo', todoRoutes);
 
 server.get('/', (req, res) => {
-    res.status(201).send('The App is working');
+    res.status(200).json({ message: 'The App is working' });
 })
 
 module.exports = server;

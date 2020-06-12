@@ -11,8 +11,10 @@ routes.post('/', async (req, res) => {
 })
 
 //delete todo by id
-routes.delete('/:id', (req, res) => {
-   return
+routes.delete('/:id', async(req, res) => {
+    const { id } = req.params;
+    await todo.deleteTodo(id);
+    res.status(200).json({message: `ID# ${id} has been deleted`})
 })
 
 

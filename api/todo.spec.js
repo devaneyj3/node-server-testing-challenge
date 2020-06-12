@@ -8,7 +8,7 @@ const server = require('../server');
 describe('Todo Routes', () => {
     describe('POST', () => {
         //validate it is the right endpoint and the status code is 201
-        it('returns a 201', async() => {
+        it('returns a 201', async () => {
             const item = {
                 id: 1,
                 name: 'george'
@@ -23,9 +23,9 @@ describe('Todo Routes', () => {
                 name: 'george'
             }
             await todoTest.insertTodo(item)
-      
+
             const todos = await todoTest.getTodos()
-          
+
 
             expect(todos).toHaveLength(1)
             expect(todos[0].name).toBe('george')
@@ -35,9 +35,26 @@ describe('Todo Routes', () => {
         })
     })
     describe('DELETE', () => {
-        it('deletes from the db', async() => {
+        //validate it is the right endpoint and the status code is 201
+        it('returns a 200', async () => {
+            const item = {
+                id: 1,
+                name: 'george'
+            }
+            const response = await request(server).delete(`/api/todo/${item.id}`)
+            expect(response.status).toBe(200)
+
+        })
+        it('deletes from the db', async () => {
+            const item = {
+                id: 1,
+                name: 'george'
+            }
+
+            await todoTest.insertTodo(item)
+
             const todos = await todoTest.getTodos()
-            
+
             await todoTest.deleteTodo(todos[0].id)
 
             const afterTodoArr = await todoTest.getTodos()
@@ -45,5 +62,5 @@ describe('Todo Routes', () => {
             expect(afterTodoArr).toHaveLength(0)
         })
     })
-    
+
 })
